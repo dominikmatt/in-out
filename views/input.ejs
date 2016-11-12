@@ -1,28 +1,16 @@
 <!DOCTYPE html>
 <html>
-	<body>
-		<h1>Input</h1>
-		<input id="record" type="button"/>
-		<input id="stop" type="button"/>
-		<section id="sound-clips">
-
-			<!-- This is left here as a helper for testing the style of the clips
-            If you want to edit their appearance without having to record clips,
-            uncomment this and reload the page. Remember to comment it again when done!
-            <article class="clip">
-              <audio controls></audio>
-              <p>Sample clip name</p>
-              <button class="delete">Delete</button>
-            </article>
-            -->
-
-		</section>
-		<script
-				src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-				integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
-				crossorigin="anonymous"></script>
-	<script src="/bower_components/socket.io-client/socket.io.js"></script>
-	<script src="/js/Socket.js"></script>
-	<script src="/js/InputManager.js"></script>
-	</body>
+<body>
+<h1>Input</h1>
+<input id="record" type="button" value="RECORD" />
+<input id="stop" type="button" value="STOP" />
+<input id="get-file" type="button" value="Get File" />
+<script
+        src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
+        crossorigin="anonymous"></script>
+<script src="/bower_components/socket.io-client/socket.io.js"></script>
+<script src="/js/Socket.js"></script>
+<script src="/js/InputManager.js"></script>
+</body>
 </html>

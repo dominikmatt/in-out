@@ -16,6 +16,7 @@ class InputManager {
         $('#record').on('click', this.handleRecord.bind(this));
 
         $('#stop').on('click', this.handleStop.bind(this));
+        $('#get-file').on('click', this.handleGetFiles.bind(this));
     }
 
     handleRecord() {
@@ -33,6 +34,10 @@ class InputManager {
             console.log(this.mediaRecorder.state);
             console.log("recorder stopped");
         }
+    }
+
+    handleGetFiles() {
+        socket.connection.emit('file.get');
     }
 
     /**
@@ -77,33 +82,12 @@ class InputManager {
     onStopHandler(chunks) {
         let clipName = prompt('Enter a name for your sound clip');
 
-        let clipContainer = document.createElement('article');
-        let clipLabel = document.createElement('p');
-        let audio = document.createElement('audio');
-        let deleteButton = document.createElement('button');
-
-        clipContainer.classList.add('clip');
-        audio.setAttribute('controls', '');
-        deleteButton.innerHTML = "Delete";
-        clipLabel.innerHTML = clipName;
-
-        clipContainer.appendChild(audio);
-        clipContainer.appendChild(clipLabel);
-        clipContainer.appendChild(deleteButton);
-        $('#sound-clips').append(clipContainer);
-
-        console.log('BLOB', chunks);
         let blob = new Blob(chunks, {'type': 'audio/ogg; codecs=opus'});
-        chunks = [];
-        let audioURL = window.URL.createObjectURL(blob);
-        audio.src = audioURL;
 
-        deleteButton.onclick = function(e) {
-            let evtTgt = e.target;
-            evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
-        };
-
-        socket.connection.emit('event', );
+        socket.connection.emit('file.upload', {
+            buffer: blob,
+            name: clipName
+        });
     }
 }
 
