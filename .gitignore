@@ -4,4 +4,6 @@
 *~
 
 # System files
-.DS_Store
+.*
+!.gitignore
+node_modules
