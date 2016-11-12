@@ -5,8 +5,8 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
  * @class InputManager
  */
 class InputManager {
-    constructor() {
-        this.audioContext = new (window.AudioContext || window.webkitAudioContext);
+    constructor(ctx) {
+      this.audioContext = ctx;
 
         setTimeout(function () {
             console.log('bind');
