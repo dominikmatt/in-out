@@ -13,6 +13,10 @@ app.get('/', function(req, res) {
     res.render('master.ejs');
 });
 
+app.get('/song', function(req, res) {
+    res.render('song.ejs');
+});
+
 // input page
 app.get('/input', function(req, res) {
     res.render('input.ejs');
