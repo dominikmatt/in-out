@@ -13,6 +13,11 @@ app.get('/', function(req, res) {
     res.render('master.ejs');
 });
 
+// input page
+app.get('/input', function(req, res) {
+    res.render('input.ejs');
+});
+
 app.use(express.static('web/'));
 
 app.listen(9002);
