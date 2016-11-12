@@ -32,7 +32,6 @@ class InputManager {
      * @param {MediaStream} stream
      */
     onUserMediaFound(stream) {
-        console.log(stream);
         var input = this.audioContext.createMediaStreamSource(stream);
         var volume = this.audioContext.createGain();
 
