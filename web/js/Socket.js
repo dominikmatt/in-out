@@ -33,10 +33,10 @@ class Socket {
     }
 
     /**
-     * @returns {Camera}
+     * @returns {Socket}
      */
     static get instance() {
-        if(!this[singleton]) {
+        if (!this[singleton]) {
             this[singleton] = new Socket(singletonEnforcer);
         }
 

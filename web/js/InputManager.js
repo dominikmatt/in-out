@@ -14,11 +14,14 @@ class InputManager {
 
     bindDomEvents() {
         $('#record').on('click', this.handleRecord.bind(this));
-
         $('#stop').on('click', this.handleStop.bind(this));
         $('#get-file').on('click', this.handleGetFiles.bind(this));
+        $('#delete-file').on('click', this.handleDeleteFile.bind(this));
     }
 
+    /**
+     * Handles click on record button.
+     */
     handleRecord() {
         if (this.mediaRecorder) {
 
@@ -28,6 +31,9 @@ class InputManager {
         }
     }
 
+    /**
+     * Handles click on stop button.
+     */
     handleStop() {
         if (this.mediaRecorder) {
             this.mediaRecorder.stop();
@@ -36,8 +42,18 @@ class InputManager {
         }
     }
 
+    /**
+     * Handles click on get files button.
+     */
     handleGetFiles() {
         socket.connection.emit('file.get');
+    }
+
+    /**
+     * Handles click on remove file button.
+     */
+    handleDeleteFile() {
+        socket.connection.emit('file.remove', {fileName: 'x1.ogg'});
     }
 
     /**
@@ -79,6 +95,11 @@ class InputManager {
         volume.connect(this.audioContext.destination);
     }
 
+    /**
+     * Handler if mediaRecorder is stopped.
+     *
+     * @param {Array} chunks
+     */
     onStopHandler(chunks) {
         let clipName = prompt('Enter a name for your sound clip');
 
