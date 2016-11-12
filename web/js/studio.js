@@ -21,8 +21,9 @@ class Mixer {
   }
 
   removeTrack(id) {
-    delete this.tracks[id];
+    var track = this.tracks[id];
     track.disconnect(this.masterGain);
+    delete track;
   }
 
   play() {
