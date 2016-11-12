@@ -15,7 +15,7 @@
       </ul>
 
       <button v-on:click="play" class="is-play-btn">Play</button>
-      <input id="record" type="button" value="RECORD" />
+      <input id="record" v-on:click="play" type="button" value="RECORD" />
       <input id="stop" type="button" value="STOP" />
     </div>
     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>

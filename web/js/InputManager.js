@@ -16,7 +16,6 @@ class InputManager {
     }
 
     bindDomEvents() {
-        console.log($('#record'));
         $('#record').on('click', this.handleRecord.bind(this));
         $('#stop').on('click', this.handleStop.bind(this));
         $('#get-file').on('click', this.handleGetFiles.bind(this));
