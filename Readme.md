@@ -26,5 +26,5 @@ yarn install
 
 #### Start Server
 ```bash
-node socket.js
+node socket-server/index.js
 ```

@@ -15,7 +15,7 @@ let singletonEnforcer = Symbol();
 
 module.exports = class Router {
     constructor(enforcer) {
-        if(enforcer != singletonEnforcer) throw "Cannot construct singleton Player";
+        if(enforcer != singletonEnforcer) throw "Cannot construct singleton Router";
 
         this._io = null;
         this._socket = null;
@@ -64,13 +64,46 @@ module.exports = class Router {
 
     bindRoutes() {
         this.socket.on('event', function (data) {
+            console.log('new connection');
             console.log(data);
         });
     }
 
     bindStreams() {
-        stream(this.socket).on('audio', (stream) => {
-            stream.pipe(fs.createWriteStream('foo.txt'));
-        });
+        this.socket.on('file.get', function() {
+            console.log('get all');
+            var fileList = [];
+
+            fs.readdir('temp/', (err, files) => {
+                files.forEach((file) => {
+                    if (file.substr(file.length - 3) === 'ogg') {
+                        fileList.push({
+                            url: '/audio/' + file
+                        });
+                    }
+                });
+
+                console.log('send all', fileList);
+                this.socket.emit('file.all', {
+                    fileList: fileList
+                })
+            });
+        }.bind(this));
+
+        // send data
+        this.socket.on('file.upload', function(data) {
+            var buf = new Buffer(data.buffer);
+
+            console.log('save file with name', data.name);
+            fs.writeFile('temp/' + data.name + '.ogg', buf, function(err) {
+                if(err) {
+                    console.log("err", err);
+                    return;
+                }
+
+                console.log('send new file event');
+                this.socket.emit('file.new')
+            }.bind(this))
+        }.bind(this));
     }
 };

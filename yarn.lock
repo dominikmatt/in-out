@@ -45,6 +45,10 @@ blob@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/blob/-/blob-0.0.4.tgz#bcf13052ca54463f30f9fc7e95b9a47630a94921"
 
+bower@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/bower/-/bower-1.8.0.tgz#55dbebef0ad9155382d9e9d3e497c1372345b44a"
+
 callsite@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/callsite/-/callsite-1.0.0.tgz#280398e5d664bd74038b6f0905153e6e8af1bc20"
@@ -80,6 +84,10 @@ cookie-signature@1.0.6:
 cookie@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
+
+"d.js@>= 0.6.0":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/d.js/-/d.js-0.7.5.tgz#06e8b8c4f6ae979c4b817c321894ce2e1f5fa90e"
 
 debug@~2.2.0, debug@2.2.0:
   version "2.2.0"
@@ -288,6 +296,13 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
+node-crate:
+  version "1.0.26"
+  resolved "https://registry.yarnpkg.com/node-crate/-/node-crate-1.0.26.tgz#0d1a0ae77cad5c1b8734f336478b240119c7363f"
+  dependencies:
+    d.js ">= 0.6.0"
+    type-of-is ">= 3.3.x"
+
 object-component@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/object-component/-/object-component-0.0.3.tgz#f0c69aa50efc95b866c186f400a33769cb2f1291"
@@ -448,6 +463,10 @@ type-is@~1.6.13:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.11"
+
+"type-of-is@>= 3.3.x":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/type-of-is/-/type-of-is-3.4.0.tgz#700dc096fbc9b86e4f79687beeb99e953d471508"
 
 ultron@1.0.x:
   version "1.0.2"

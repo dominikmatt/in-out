@@ -13,6 +13,7 @@
     "bower": "^1.8.0",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
+    "node-crate": "^1.0.26",
     "socket.io": "^1.5.1",
     "socket.io-stream": "^0.9.1"
   },
