@@ -1,7 +1,7 @@
 'use strict';
 
-var stream = require('socket.io-stream');
 var fs = require('fs');
+var file = require('./File.js').instance;
 
 /**
  * @type {Symbol}
@@ -13,6 +13,10 @@ let singleton = Symbol();
  */
 let singletonEnforcer = Symbol();
 
+/**
+ * @class Router
+ * @type {Router}
+ */
 module.exports = class Router {
     constructor(enforcer) {
         if(enforcer != singletonEnforcer) throw "Cannot construct singleton Router";
@@ -32,78 +36,64 @@ module.exports = class Router {
         return this[singleton];
     }
 
+    /**
+     * @param {IO} io
+     */
     set io(io) {
         this._io = io;
     }
 
+    /**
+     * @returns {IO}
+     */
     get io() {
         return this._io;
     }
 
+    /**
+     * @param {Socket} socket
+     */
     set socket(socket) {
         this._socket = socket;
     }
 
+    /**
+     * @returns {Socket}
+     */
     get socket() {
         return this._socket;
     }
 
+    /**
+     * Start connection
+     */
     start() {
         this.bindEvents();
     }
 
+    /**
+     * Bind IO events
+     */
     bindEvents() {
         this.io.on('connection', this.onConnection.bind(this));
     }
 
+    /**
+     * on conncetion open
+     *
+     * @param socket
+     */
     onConnection(socket) {
         this.socket = socket;
+        file.socket = socket;
         this.bindRoutes();
-        this.bindStreams();
     }
 
+    /**
+     * Bin all socket Routes
+     */
     bindRoutes() {
-        this.socket.on('event', function (data) {
-            console.log('new connection');
-            console.log(data);
-        });
-    }
-
-    bindStreams() {
-        this.socket.on('file.get', function() {
-            console.log('get all');
-            var fileList = [];
-
-            fs.readdir('temp/', (err, files) => {
-                files.forEach((file) => {
-                    if (file.substr(file.length - 3) === 'ogg') {
-                        fileList.push({
-                            url: '/audio/' + file
-                        });
-                    }
-                });
-
-                console.log('send all', fileList);
-                this.socket.emit('file.all', {
-                    fileList: fileList
-                })
-            });
-        }.bind(this));
-
-        // send data
-        this.socket.on('file.upload', function(data) {
-            var buf = new Buffer(data.buffer);
-
-            console.log('save file with name', data.name);
-            fs.writeFile('temp/' + data.name + '.ogg', buf, function(err) {
-                if(err) {
-                    console.log("err", err);
-                    return;
-                }
-
-                console.log('send new file event');
-                this.socket.emit('file.new')
-            }.bind(this))
-        }.bind(this));
+        this.socket.on('file.get', file.getAll.bind(file));
+        this.socket.on('file.upload', file.upload.bind(file));
     }
 };

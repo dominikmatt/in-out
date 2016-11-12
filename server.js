@@ -8,7 +8,11 @@ var app = express();
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-// use res.render to load up an ejs view file
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // index page
 app.get('/', function(req, res) {
