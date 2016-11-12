@@ -13,13 +13,14 @@ app.get('/', function(req, res) {
     res.render('master.ejs');
 });
 
-app.get('/song', function(req, res) {
-    res.render('song.ejs');
-});
-
 // input page
 app.get('/input', function(req, res) {
     res.render('input.ejs');
+});
+
+// studio page
+app.get('/studio', function(req, res) {
+    res.render('studio.ejs');
 });
 
 app.use(express.static('web/'));
