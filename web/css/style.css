@@ -25,7 +25,7 @@ ul li span {
     font-weight: 500;
 }
 
-button {
+button, input {
     border: none;
     border-radius: 0;
     background-color: darkred;
@@ -36,4 +36,8 @@ button {
 
 .is-play-btn {
     background-color: darkgreen;
+}
+
+.is-record-btn {
+    background-color: darkgoldenrod;
 }
