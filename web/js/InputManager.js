@@ -8,8 +8,11 @@ class InputManager {
     constructor() {
         this.audioContext = new (window.AudioContext || window.webkitAudioContext);
 
-        this.startUserMedia();
-        this.bindDomEvents();
+        setTimeout(function () {
+            console.log('bind');
+            this.startUserMedia();
+            this.bindDomEvents();
+        }.bind(this), 1000);
     }
 
     bindDomEvents() {
