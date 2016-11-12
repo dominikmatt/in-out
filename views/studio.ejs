@@ -15,8 +15,14 @@
       </ul>
 
       <button v-on:click="play" class="is-play-btn">Play</button>
-      <input id="record" type="button" value="RECORD" class="is-record-btn" />
+      <input id="record" v-on:click="play" type="button" value="RECORD" class="is-record-btn"  />
       <input id="stop" type="button" value="STOP" />
+
+      <webaudio-knob src="/bower_components/webaudio-controls/img/LittlePhatty.png"
+        value="0.8" min="0" max="1" step="0.01" width="64" height="64" sprites="100"
+        tooltip="Pan" id="monitorvolume">
+	    </webaudio-knob>
+
     </div>
     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <script
@@ -31,7 +37,7 @@
     <script type="application/javascript" src="/js/track.js"></script>
     <script type="text/javascript">
 
-const context = new AudioContext();
+const context = new (window.AudioContext || window.webkitAudioContext)();
 
 var app = new Vue({
   el: '#studio',
@@ -40,6 +46,7 @@ var app = new Vue({
     mixer: new Mixer(context)
   },
   created: function() {
+    let mic = new InputManager(context);
     let m = this.mixer;
     let list = this.trackList;
 
@@ -53,6 +60,10 @@ var app = new Vue({
       });
     };
 
+    var removeTrack = (item, idx) => {
+      m.removeTrack(item.fileName);
+    };
+
     socket.connection.on('file.all', (data) => {
       console.info('file.all', data);
       data.fileList.map(addTrack);
@@ -63,8 +74,9 @@ var app = new Vue({
       addTrack(data);
     });
 
-    socket.connection.on('file.remove', (data) => {
-      console.info('file.remove', data);
+    socket.connection.on('file.removed', (data) => {
+      console.info('file.removed', data);
+      removeTrack(data);
     });
 
     socket.connection.emit('file.get');
