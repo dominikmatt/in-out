@@ -13,7 +13,8 @@
     "bower": "^1.8.0",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
-    "socket.io": "^1.5.1"
+    "socket.io": "^1.5.1",
+    "socket.io-stream": "^0.9.1"
   },
   "repository": {
     "url": "https://github.com/dominikmatt/in-out.git",
