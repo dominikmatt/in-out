@@ -4,12 +4,7 @@
     <title>Studio</title>
     <link rel="import" href="bower_components/polymer/polymer.html" />
     <link rel="import" href="bower_components/webaudio-controls/webaudio-controls.html" />
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="/bower_components/socket.io-client/socket.io.js"></script>
-    <script src="/bower_components/vue/dist/vue.js"></script>
-    <script type="application/javascript" src="/js/Socket.js"></script>
-    <script type="application/javascript" src="/js/studio.js"></script>
-    <script type="application/javascript" src="/js/track.js"></script>
+
   </head>
   <body>
 
@@ -20,8 +15,20 @@
       </ul>
 
       <button v-on:click="play">Play</button>
+      <input id="record" type="button" value="RECORD" />
+      <input id="stop" type="button" value="STOP" />
     </div>
-
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+            integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
+            crossorigin="anonymous"></script>
+    <script src="/bower_components/socket.io-client/socket.io.js"></script>
+    <script src="/bower_components/vue/dist/vue.js"></script>
+    <script type="application/javascript" src="/js/Socket.js"></script>
+    <script type="application/javascript" src="/js/InputManager.js"></script>
+    <script type="application/javascript" src="/js/studio.js"></script>
+    <script type="application/javascript" src="/js/track.js"></script>
     <script type="text/javascript">
 
 const context = new AudioContext();
