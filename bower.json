@@ -3,9 +3,9 @@
   "description": "",
   "license": "Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0",
   "dependencies": {
-    "socket-io": "^1.0.0",
     "socket.io-client": "^1.5.1",
-    "webaudio-controls": "*"
+    "webaudio-controls": "*",
+    "vue": "^2.0.5"
   },
   "devDependencies": {}
 }

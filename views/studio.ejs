@@ -5,10 +5,71 @@
     <link rel="import" href="bower_components/polymer/polymer.html" />
     <link rel="import" href="bower_components/webaudio-controls/webaudio-controls.html" />
     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="/bower_components/socket-io/build/library.js"></script>
+    <script src="/bower_components/socket.io-client/socket.io.js"></script>
+    <script src="/bower_components/vue/dist/vue.js"></script>
+    <script type="application/javascript" src="/js/Socket.js"></script>
     <script type="application/javascript" src="/js/studio.js"></script>
+    <script type="application/javascript" src="/js/track.js"></script>
   </head>
   <body>
+
+    <div id="studio">
+
+      <ul>
+        <audiotrack v-for="track in trackList" v-bind:track="track" />
+      </ul>
+
+      <button v-on:click="play">Play</button>
+    </div>
+
+    <script type="text/javascript">
+
+const context = new AudioContext();
+
+var app = new Vue({
+  el: '#studio',
+  data: {
+    trackList: [],
+    mixer: new Mixer(context)
+  },
+  created: function() {
+    let m = this.mixer;
+    let list = this.trackList;
+
+    var addTrack = (item, idx) => {
+      let url = 'http://192.168.43.105:9002' + item.url;
+      let t = new Track(context, url, item.fileName);
+      m.addTrack(item.fileName, t);
+
+      t.init().then(() => {
+        list.push(t);
+      });
+    };
+
+    socket.connection.on('file.all', (data) => {
+      console.info('file.all', data);
+      data.fileList.map(addTrack);
+    });
+
+    socket.connection.on('file.new', (data) => {
+      console.info('file.new', data);
+      addTrack(data);
+    });
+
+    socket.connection.on('file.remove', (data) => {
+      console.info('file.remove', data);
+    });
+
+    socket.connection.emit('file.get');
+  },
+  methods: {
+    play: function() {
+      this.mixer.play();
+    }
+  }
+});
+
+    </script>
 
   </body>
 </html>
