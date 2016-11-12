@@ -26,7 +26,7 @@ module.exports = class Router {
     }
 
     /**
-     * @returns {Camera}
+     * @returns {Router}
      */
     static get instance() {
         if(!this[singleton]) {
@@ -95,5 +95,6 @@ module.exports = class Router {
     bindRoutes() {
         this.socket.on('file.get', file.getAll.bind(file));
         this.socket.on('file.upload', file.upload.bind(file));
+        this.socket.on('file.remove', file.remove.bind(file));
     }
 };
