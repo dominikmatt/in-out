@@ -39,6 +39,12 @@ class InputManager {
 
         input.connect(volume);
         volume.connect(this.audioContext.destination);
+
+        this.send();
+    }
+
+    send() {
+        myScriptProcessor = this.audioContext.createScriptProcessor(16384, 1, 1);
     }
 }
 
