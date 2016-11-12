@@ -1,6 +1,8 @@
 // server.js
 // load the things we need
 var express = require('express');
+var path = require('path');
+var fs = require('fs');
 var app = express();
 
 // set the view engine to ejs
@@ -21,6 +23,17 @@ app.get('/input', function(req, res) {
 // studio page
 app.get('/studio', function(req, res) {
     res.render('studio.ejs');
+});
+
+// studio page
+app.get('/audio/:file', function(req, res) {
+    var file = req.param('file');
+    var filepath = path.join(__dirname, 'temp/' + file);
+    var readStream = fs.createReadStream(filepath);
+
+    res.set({'Content-Type': 'audio/ogg'});
+
+    readStream.pipe(res);
 });
 
 app.use(express.static('web/'));
