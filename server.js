@@ -14,6 +14,7 @@ app.use(function(req, res, next) {
     next();
 });
 
+
 // index page
 app.get('/', function(req, res) {
     res.render('master.ejs');
@@ -30,14 +31,29 @@ app.get('/studio', function(req, res) {
 });
 
 // studio page
-app.get('/audio/:file', function(req, res) {
+app.get('/audio-stream/:file', function(req, res) {
     var file = req.param('file');
     var filepath = path.join(__dirname, 'temp/' + file);
     var readStream = fs.createReadStream(filepath);
+    var stat = fs.statSync(filepath);
 
-    res.set({'Content-Type': 'audio/ogg'});
+    res.set({
+        'Content-Type': 'audio/ogg',
+        'Content-Length': stat.size,
+        'Content-Range': 'bytes',
+        'Accept-Range': 'bytes',
+        'Transfer-Encoding': 'chunked'
+    });
 
     readStream.pipe(res);
+});
+
+// studio page
+app.get('/audio-send/:file', function(req, res) {
+    var file = req.param('file');
+    var filepath = path.join(__dirname, 'temp/' + file);
+
+    res.sendFile(filepath);
 });
 
 app.use(express.static('web/'));

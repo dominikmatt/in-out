@@ -20,7 +20,7 @@ module.exports = class File {
     }
 
     /**
-     * @returns {Camera}
+     * @returns {File}
      */
     static get instance() {
         if(!this[singleton]) {
@@ -51,9 +51,12 @@ module.exports = class File {
      */
     upload(data) {
         var buf = new Buffer(data.buffer);
+        var fileName = data.name + '.ogg';
+
+        fileName = this.checkFileName(fileName, 0);
 
         console.log('save file with name', data.name);
-        fs.writeFile('temp/' + data.name + '.ogg', buf, function(err) {
+        fs.writeFile(this.getFilePath(fileName), buf, function(err) {
             if(err) {
                 console.log("err", err);
                 return;
@@ -61,7 +64,9 @@ module.exports = class File {
 
             console.log('send new file event');
             this.socket.emit('file.new', {
-                url: '/audio/' + data.name + '.ogg'
+                fileName: fileName,
+                url: '/audio-stream/' + fileName,
+                urlSend: '/audio-send/' + fileName
             });
         }.bind(this))
     }
@@ -77,7 +82,9 @@ module.exports = class File {
             files.forEach((file) => {
                 if (file.substr(file.length - 3) === 'ogg') {
                     fileList.push({
-                        url: '/audio/' + file
+                        fileName: file,
+                        url: '/audio-stream/' + file,
+                        urlSend: '/audio-send/' + file
                     });
                 }
             });
@@ -87,5 +94,52 @@ module.exports = class File {
                 fileList: fileList
             })
         });
+    }
+
+    /**
+     * Remove file.
+     *
+     * @param fileName
+     */
+    remove(data) {
+        console.log('Remove file: ', data.fileName);
+        var filePath = this.getFilePath(data.fileName);
+
+        fs.unlinkSync(filePath);
+
+        this.socket.emit('file.removed', {
+            fileName: data.fileName,
+        });
+    }
+
+    /**
+     *
+     * @param fileName
+     * @returns {string}
+     */
+    getFilePath(fileName) {
+        return 'temp/' + fileName;
+    }
+
+    /**
+     * Check fileName if that name allready exists.
+     *
+     * @param {string} fileName
+     * @returns {string}
+     */
+    checkFileName(fileName, count) {
+        if (fs.existsSync(this.getFilePath(fileName))) {
+            if (count > 0) {
+                fileName = fileName.substring(0, fileName.length - 5) + count + '.ogg';
+            } else {
+                fileName = fileName.substring(0, fileName.length - 4) + '-1.ogg';
+            }
+
+            count++;
+        } else {
+            return fileName;
+        }
+
+        return this.checkFileName(fileName, count);
     }
 };

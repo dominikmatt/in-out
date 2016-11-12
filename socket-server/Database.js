@@ -1,6 +1,5 @@
 'use strict';
 
-var stream = require('socket.io-stream');
 var fs = require('fs');
 
 /**
@@ -21,7 +20,7 @@ module.exports = class Database {
     }
 
     /**
-     * @returns {Camera}
+     * @returns {Database}
      */
     static get instance() {
         if(!this[singleton]) {
