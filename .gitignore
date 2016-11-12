@@ -1,0 +1,7 @@
+# IDEs
+.idea/*
+*.iml
+*~
+
+# System files
+.DS_Store
