@@ -2,6 +2,9 @@
     font-family: "Helvetica Neue";
 }
 
+body {
+  background-color: #6f6f6f;
+}
 ul {
     display: -webkit-box;
     display: -moz-box;

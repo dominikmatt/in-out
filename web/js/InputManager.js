@@ -20,6 +20,11 @@ class InputManager {
         $('#stop').on('click', this.handleStop.bind(this));
         $('#get-file').on('click', this.handleGetFiles.bind(this));
         $('#delete-file').on('click', this.handleDeleteFile.bind(this));
+        $('#monitorvolume').on('change', this.handleMonitorVolume.bind(this));
+    }
+
+    handleMonitorVolume(event) {
+        this.volume.gain.value = event.target.value;
     }
 
     /**
@@ -91,12 +96,12 @@ class InputManager {
         this.mediaRecorder.onstop = this.onStopHandler.bind(null, chunks);
 
         let input = this.audioContext.createMediaStreamSource(stream);
-        let volume = this.audioContext.createGain();
+        this.volume = this.audioContext.createGain();
 
-        volume.gain.value = 0.8;
+        this.volume.gain.value = 0.8;
 
-        input.connect(volume);
-        volume.connect(this.audioContext.destination);
+        input.connect(this.volume);
+        this.volume.connect(this.audioContext.destination);
     }
 
     /**

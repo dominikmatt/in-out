@@ -17,6 +17,12 @@
       <button v-on:click="play" class="is-play-btn">Play</button>
       <input id="record" v-on:click="play" type="button" value="RECORD" />
       <input id="stop" type="button" value="STOP" />
+
+      <webaudio-knob src="/bower_components/webaudio-controls/img/LittlePhatty.png"
+        value="0.8" min="0" max="1" step="0.01" width="64" height="64" sprites="100"
+        tooltip="Pan" id="monitorvolume">
+	    </webaudio-knob>
+
     </div>
     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <script
