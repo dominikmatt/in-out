@@ -4,7 +4,6 @@
 *~
 
 # System files
-.*
 !.gitignore
 node_modules
 bower_components
