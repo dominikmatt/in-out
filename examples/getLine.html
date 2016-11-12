@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Live input</title>
+</head>
+<body>
+
+Volume: <input type="range" max="1" step="0.1" value="0.8" onchange="changeVolume(this.value)">
+<pre id="log"></pre>
+<script>
+    function fire(e, data) {
+        log.innerHTML += "\n" + e + " " + (data || '');
+    }
+
+    var audio_context;
+    var volume;
+
+    function iCanHazUserMedia(stream) {
+
+        fire('I haz live stream');
+
+        var input = audio_context.createMediaStreamSource(stream);
+        volume = audio_context.createGain();
+        volume.gain.value = 0.8;
+        input.connect(volume);
+        volume.connect(audio_context.destination);
+
+        fire('input connected to destination');
+    }
+
+    function changeVolume(value) {
+        if (!volume) return;
+        volume.gain.value = value;
+        fire('volume' + value);
+    }
+
+    (function init(g){
+        try {
+            audio_context = new (g.AudioContext || g.webkitAudioContext);
+            fire('Audio context OK');
+            // shim
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+            fire('navigator.getUserMedia ' + (navigator.getUserMedia ? 'OK' : 'fail'));
+            // use
+            navigator.getUserMedia(
+                    {audio:true},
+                    iCanHazUserMedia,
+                    function(e){fire('No live audio input ' + e);}
+            );
+        } catch (e) {
+            alert('No web audio support in this browser');
+        }
+    }(window));
+</script>
+
+
+<p><a href="/webaudio-live-input">blog post</a>
+</body>
+</html>
