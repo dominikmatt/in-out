@@ -44,7 +44,7 @@ class InputManager {
     }
 
     send() {
-        myScriptProcessor = this.audioContext.createScriptProcessor(16384, 1, 1);
+        let myScriptProcessor = this.audioContext.createScriptProcessor(16384, 1, 1);
     }
 }
 
