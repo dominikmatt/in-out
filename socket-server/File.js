@@ -17,6 +17,7 @@ module.exports = class File {
         if(enforcer != singletonEnforcer) throw "Cannot construct singleton File";
 
         this._socket = null;
+        this.startWatch();
     }
 
     /**
@@ -28,6 +29,17 @@ module.exports = class File {
         }
 
         return this[singleton];
+    }
+
+    startWatch() {
+        fs.watch('temp/', function (event, fileName) {
+            if (!fs.existsSync(this.getFilePath(fileName))) {
+                console.log('removed from filesystem');
+                this.socket.emit('file.removed', {
+                    fileName: fileName
+                });
+            }
+        }.bind(this));
     }
 
     /**
@@ -102,14 +114,16 @@ module.exports = class File {
      * @param fileName
      */
     remove(data) {
-        console.log('Remove file: ', data.fileName);
-        var filePath = this.getFilePath(data.fileName);
+        if (fs.existsSync(this.getFilePath(data.fileName))) {
+            var filePath = this.getFilePath(data.fileName);
 
-        fs.unlinkSync(filePath);
+            fs.unlinkSync(filePath);
 
-        this.socket.emit('file.removed', {
-            fileName: data.fileName,
-        });
+            console.log('Remove file: ', data.fileName);
+            this.socket.emit('file.removed', {
+                fileName: data.fileName,
+            });
+        }
     }
 
     /**
