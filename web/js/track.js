@@ -2,7 +2,7 @@ Vue.component('audiotrack', {
   props: ['track'],
   template: `
     <li>
-      {{ track.name }}
+      <span>{{ track.name }}</span>
       <webaudio-slider src="/bower_components/webaudio-controls/img/vsliderbody.png"
         knobsrc="/bower_components/webaudio-controls/img/vsliderknob.png"
         :value="track.getVolume()" min="0" max="1" step="0.01" basewidth="24" baseheight="128"

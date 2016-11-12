@@ -1,0 +1,39 @@
+* {
+    font-family: "Helvetica Neue";
+}
+
+ul {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-flow: row wrap;
+    justify-content: space-around;
+    list-style: none;
+}
+
+ul li {
+    text-align: center;
+}
+
+ul li span {
+    display: block;
+    padding-bottom: 15px;
+    text-align: center;
+    font-weight: 500;
+}
+
+button {
+    border: none;
+    border-radius: 0;
+    background-color: darkred;
+    color: #fff;
+    font-size: 16px;
+    padding: 5px 15px;
+}
+
+.is-play-btn {
+    background-color: darkgreen;
+}
