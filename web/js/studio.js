@@ -132,6 +132,7 @@ class AudioTrack {
     this.ctx = ctx;
     this.url = url;
     this.node = ctx.createBufferSource();
+    this.node.loop = true;
     this.ready = false;
   }
 
