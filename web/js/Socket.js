@@ -19,7 +19,7 @@ class Socket {
             throw "Cannot construct singleton Player";
         }
 
-        this.connection = io('ws://192.168.43.105:9003', {
+        this.connection = io('ws://api-in-out.domready.at', {
             transports: ['websocket']
         });
     }
