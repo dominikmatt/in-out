@@ -51,7 +51,7 @@ var app = new Vue({
     let list = this.trackList;
 
     var addTrack = (item, idx) => {
-      let url = 'http://192.168.43.105:9002' + item.url;
+      let url = 'http://in-out.domready.at' + item.url;
       let t = new Track(context, url, item.fileName);
       m.addTrack(item.fileName, t);
 
